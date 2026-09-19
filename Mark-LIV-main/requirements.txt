@@ -1,0 +1,18 @@
+# Google Gemini Python SDK (Official)
+google-genai>=2.4.0
+
+# HTTP & Network
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Environment variables
+python-dotenv>=1.0.1
+
+# Optional Windows Automation (Windows host only)
+# pywin32>=306; sys_platform == 'win32'
+# pyautogui>=0.9.54
+# psutil>=5.9.8
+
+# Optional Speech & Voice
+# SpeechRecognition>=3.10.0
+# pyttsx3>=2.90

@@ -1,0 +1,30 @@
+{
+  "assistant_name": "JARVIS",
+  "version": "54.0.0",
+  "mode": "HYBRID",
+  "gemini": {
+    "model": "gemini-2.5-flash",
+    "temperature": 0.3,
+    "max_output_tokens": 1024
+  },
+  "security": {
+    "protected_actions": [
+      "shutdown",
+      "restart",
+      "delete_file",
+      "delete_folder",
+      "kill_process"
+    ],
+    "require_confirmation": true
+  },
+  "speech": {
+    "wake_word": "jarvis",
+    "stt_engine": "speech_recognition",
+    "tts_engine": "pyttsx3",
+    "voice_rate": 185
+  },
+  "system": {
+    "log_level": "INFO",
+    "history_limit": 50
+  }
+}

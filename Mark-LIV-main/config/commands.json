@@ -1,0 +1,40 @@
+{
+  "routes": [
+    {
+      "pattern": "open (notepad|chrome|calculator|calc|explorer|code)",
+      "route": "LOCAL",
+      "action": "open_app"
+    },
+    {
+      "pattern": "set (?:the )?volume to (\\d+)(?: percent|%)?",
+      "route": "LOCAL",
+      "action": "volume"
+    },
+    {
+      "pattern": "(shutdown|restart) (?:the )?(?:computer|pc|system)",
+      "route": "LOCAL",
+      "action": "power",
+      "requires_confirmation": true
+    },
+    {
+      "pattern": "(?:search|look up) (.*)",
+      "route": "ONLINE",
+      "action": "web_search"
+    },
+    {
+      "pattern": "weather (?:in|for) (.*)",
+      "route": "ONLINE",
+      "action": "weather"
+    },
+    {
+      "pattern": "turn (on|off) (?:the )?(light|fan|plug)",
+      "route": "DEVICE",
+      "action": "smart_home"
+    },
+    {
+      "pattern": "(?:write|create|generate) (?:a )?python (?:script|code|program) (.*)",
+      "route": "HYBRID",
+      "action": "code_gen"
+    }
+  ]
+}

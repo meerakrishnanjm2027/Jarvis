@@ -1,0 +1,6 @@
+{
+  "name": "JARVIS Hybrid PC Assistant",
+  "description": "Hybrid AI PC Assistant integrating Google Gemini, Windows automation, offline/online routing, voice commands, and security verification.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

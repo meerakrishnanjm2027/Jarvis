@@ -85,11 +85,18 @@ export const JarvisHeader: React.FC<JarvisHeaderProps> = ({
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border ${
               geminiStatus === 'CONNECTED'
                 ? 'bg-indigo-950/40 border-indigo-500/40 text-indigo-300'
-                : 'bg-amber-950/40 border-amber-500/40 text-amber-300'
+                : geminiStatus === 'RESTRICTED'
+                ? 'bg-amber-950/40 border-amber-500/40 text-amber-300'
+                : 'bg-slate-900 border-slate-700 text-slate-400'
             }`}
+            title={
+              geminiStatus === 'RESTRICTED'
+                ? 'Project quota restricted; automatic local fallback intelligence is active.'
+                : `Gemini status: ${geminiStatus}`
+            }
           >
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Gemini: {geminiStatus}</span>
+            <span>Gemini: {geminiStatus === 'RESTRICTED' ? 'STANDBY / LOCAL' : geminiStatus}</span>
           </div>
 
           {/* Security Subsystem indicator */}

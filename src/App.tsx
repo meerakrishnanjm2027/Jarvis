@@ -60,7 +60,11 @@ export default function App() {
       const healthRes = await fetch('/api/health');
       if (healthRes.ok) {
         const healthData = await healthRes.json();
-        setGeminiStatus(healthData.hasGeminiKey ? 'CONNECTED' : 'DISCONNECTED');
+        if (healthData.isGeminiRestricted) {
+          setGeminiStatus('RESTRICTED');
+        } else {
+          setGeminiStatus(healthData.hasGeminiKey ? 'CONNECTED' : 'DISCONNECTED');
+        }
       } else {
         setGeminiStatus('DISCONNECTED');
       }
@@ -234,7 +238,7 @@ export default function App() {
         speakText(successMsg);
         addHistory(commandText, assignedRoute, classification.action, 'SUCCESS', successMsg, true);
       } else if (assignedRoute === 'AI_CHAT' || assignedRoute === 'HYBRID') {
-        // Gemini API Interaction
+        // Gemini API / Local AI Interaction
         const res = await fetch('/api/gemini/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -243,23 +247,17 @@ export default function App() {
 
         if (res.ok) {
           const data = await res.json();
-          if (data.success && data.text) {
-            const reply = data.text;
-            setStatus('SUCCESS');
-            setResultMessage(reply.slice(0, 160) + (reply.length > 160 ? '...' : ''));
-            speakText(reply.slice(0, 120));
-            addHistory(commandText, assignedRoute, classification.action, 'SUCCESS', reply, true);
-          } else {
-            // Intelligent fallback when API key is unverified/quota restricted
-            const fallback =
-              lower.includes('decorator')
-                ? 'Python decorators dynamically extend function behavior via higher-order functions without altering the source.'
-                : 'JARVIS AI Engine evaluated your request. For full Gemini live tokens, configure an active API key in settings.';
-            setStatus('SUCCESS');
-            setResultMessage(fallback);
-            speakText(fallback);
-            addHistory(commandText, assignedRoute, classification.action, 'SUCCESS', fallback, true);
+          if (data.source === 'LOCAL_KNOWLEDGE_FALLBACK' || data.originalError === 'PERMISSION_DENIED') {
+            setGeminiStatus('RESTRICTED');
+          } else if (data.source === 'GEMINI_LIVE') {
+            setGeminiStatus('CONNECTED');
           }
+
+          const reply = data.text || 'Command processed successfully.';
+          setStatus('SUCCESS');
+          setResultMessage(reply.slice(0, 160) + (reply.length > 160 ? '...' : ''));
+          speakText(reply.slice(0, 120));
+          addHistory(commandText, assignedRoute, classification.action, 'SUCCESS', reply, true);
         } else {
           const fallback =
             'Python decorators wrap functions with custom logic using the @ syntax without altering original code.';

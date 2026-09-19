@@ -2,7 +2,7 @@ export type JarvisMode = 'HYBRID' | 'LOCAL' | 'ONLINE' | 'AI_CHAT' | 'DEVICE';
 
 export type NetworkStatus = 'ONLINE' | 'OFFLINE';
 
-export type GeminiStatus = 'CONNECTED' | 'DISCONNECTED' | 'CHECKING';
+export type GeminiStatus = 'CONNECTED' | 'DISCONNECTED' | 'CHECKING' | 'RESTRICTED';
 
 export type ActionStatus =
   | 'IDLE'
